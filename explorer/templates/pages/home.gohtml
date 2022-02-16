@@ -1,0 +1,15 @@
+{{define "home"}} <!-- define template-->
+<!DOCTYPE html>
+<html lang="en">
+  {{template "head" .PageTitle}} <!-- "head" template에 PageTitle를 보냄-->
+  <body>
+    {{template "header" .PageTitle}}
+    <main>
+    {{range .Blocks}} 
+      {{template "block" .}}
+    {{end}}
+    </main>
+    {{template "footer" .PageTitle}}
+  </body>
+</html>
+{{end}}
