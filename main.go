@@ -1,7 +1,9 @@
 package main
 
-import "github.com/HMangoo/makeCoin/explorer"
+import (
+	"github.com/HMangoo/makeCoin/rest"
+)
 
 func main() {
-	explorer.Start()
+	rest.Start(4000) // send port number
 }

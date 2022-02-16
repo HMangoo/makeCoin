@@ -10,7 +10,6 @@ import (
 )
 
 const (
-	port        string = ":4000"
 	templateDir string = "explorer/templates/"
 )
 
@@ -45,15 +44,16 @@ func add(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Start() {
+func Start(port int) {
+	handler := http.NewServeMux() // ServeMux는 url과 url함수를 연결해 주는 역할
 	// load template / pattern(*)을 이용하여 template를 load, template.Must(helper function) : error check
 	templates = template.Must(template.ParseGlob(templateDir + "pages/*.gohtml")) // use standard libaray template
 	templates = template.Must(templates.ParseGlob(templateDir + "partials/*.gohtml")) // use templates variable
 
-	http.HandleFunc("/", home)
-	http.HandleFunc("/add", add)
+	handler.HandleFunc("/", home)
+	handler.HandleFunc("/add", add)
 	
-	fmt.Printf("Listening on http://localhost%s\n", port)
-	log.Fatal(http.ListenAndServe(port, nil))
+	fmt.Printf("Listening on http://localhost:%d\n", port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), handler))
 	
 }
